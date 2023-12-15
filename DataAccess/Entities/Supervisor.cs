@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Core.Entities;
 
 namespace DataAccess.Entities;
 
-public partial class Supervisor
+public partial class Supervisor : IEntity
 {
     public int Id { get; set; }
 

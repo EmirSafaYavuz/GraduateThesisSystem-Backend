@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Core.Entities;
 
 namespace DataAccess.Entities;
 
-public partial class Author
+public partial class Author : IEntity
 {
     public int Id { get; set; }
 
