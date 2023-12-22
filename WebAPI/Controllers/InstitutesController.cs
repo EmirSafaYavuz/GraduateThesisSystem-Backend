@@ -7,29 +7,28 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthorsController : ControllerBase
+    public class InstitutesController : ControllerBase
     {
-        private readonly IAuthorService _authorService;
+        private readonly IInstituteService _instituteService;
 
-        public AuthorsController(IAuthorService authorService)
+        public InstitutesController(IInstituteService instituteService)
         {
-            _authorService = authorService;
+            _instituteService = instituteService;
         }
         
-        
         ///<summary>
-        ///List Authors
+        ///List Institutes
         ///</summary>
-        ///<remarks>Authors</remarks>
-        ///<return>List authors</return>
+        ///<remarks>Institutes</remarks>
+        ///<return>List institutes</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Author>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Institute>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet]
         public IActionResult GetAll()
         {
-            var result = _authorService.GetAll();
+            var result = _instituteService.GetAll();
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -39,17 +38,17 @@ namespace WebAPI.Controllers
         }
         
         /// <summary>
-        /// Add Author.
+        /// Add Institute.
         /// </summary>
-        /// <param name="author"></param>
+        /// <param name="institute"></param>
         /// <returns></returns>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Author))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Institute))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost]
-        public IActionResult Add([FromBody] Author author)
+        public IActionResult Add([FromBody] Institute institute)
         {
-            var result = _authorService.Add(author);
+            var result = _instituteService.Add(institute);
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -59,7 +58,7 @@ namespace WebAPI.Controllers
         }
         
         /// <summary>
-        /// Delete Author.
+        /// Delete Institute.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -67,9 +66,9 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult Delete(int id)
         {
-            var result = await _authorService.Delete(id);
+            var result = _instituteService.Delete(id);
             if (result.Success)
             {
                 return Ok(result.Message);

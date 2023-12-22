@@ -7,29 +7,28 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthorsController : ControllerBase
+    public class LanguagesController : ControllerBase
     {
-        private readonly IAuthorService _authorService;
+        private readonly ILanguageService _languageService;
 
-        public AuthorsController(IAuthorService authorService)
+        public LanguagesController(ILanguageService languageService)
         {
-            _authorService = authorService;
+            _languageService = languageService;
         }
-        
-        
+
         ///<summary>
-        ///List Authors
+        ///List Languages
         ///</summary>
-        ///<remarks>Authors</remarks>
-        ///<return>List authors</return>
+        ///<remarks>Languages</remarks>
+        ///<return>List languages</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Author>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Language>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet]
         public IActionResult GetAll()
         {
-            var result = _authorService.GetAll();
+            var result = _languageService.GetAll();
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -39,17 +38,17 @@ namespace WebAPI.Controllers
         }
         
         /// <summary>
-        /// Add Author.
+        /// Add Language.
         /// </summary>
-        /// <param name="author"></param>
+        /// <param name="language"></param>
         /// <returns></returns>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Author))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Language))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost]
-        public IActionResult Add([FromBody] Author author)
+        public IActionResult Add([FromBody] Language language)
         {
-            var result = _authorService.Add(author);
+            var result = _languageService.Add(language);
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -59,7 +58,7 @@ namespace WebAPI.Controllers
         }
         
         /// <summary>
-        /// Delete Author.
+        /// Delete Language.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -67,9 +66,9 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult Delete(int id)
         {
-            var result = await _authorService.Delete(id);
+            var result = _languageService.Delete(id);
             if (result.Success)
             {
                 return Ok(result.Message);

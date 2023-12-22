@@ -17,7 +17,27 @@ public class AuthorManager : IAuthorService
 
     public IDataResult<IEnumerable<Author>> GetAll()
     {
-        var authorsWithTheses = _authorDal.Query().Include(a => a.Theses).ToList();
-        return new SuccessDataResult<IEnumerable<Author>>(authorsWithTheses);
+        var authors = _authorDal.GetList();
+        return new SuccessDataResult<IEnumerable<Author>>(authors);
+    }
+
+    public IDataResult<Author> Add(Author author)
+    {
+        var addedAuthor = _authorDal.Add(author);
+        _authorDal.SaveChanges();
+        return new SuccessDataResult<Author>(addedAuthor);
+    }
+
+    public async Task<IResult> Delete(int id)
+    {
+        var author = await _authorDal.GetAsync(a => a.Id == id);
+        if (author == null)
+        {
+            return new ErrorResult("Author not found");
+        }
+
+        _authorDal.Delete(author);
+        await _authorDal.SaveChangesAsync();
+        return new SuccessResult();
     }
 }
