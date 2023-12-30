@@ -22,7 +22,6 @@ public class SupervisorsThesisManager : ISupervisorsThesisService
     public IDataResult<SupervisorsThesis> Add(SupervisorsThesis supervisorsThesis)
     {
         var addedSupervisorsThesis = _supervisorsThesisDal.Add(supervisorsThesis);
-        _supervisorsThesisDal.SaveChanges();
         return new SuccessDataResult<SupervisorsThesis>(addedSupervisorsThesis);
     }
 
@@ -35,7 +34,6 @@ public class SupervisorsThesisManager : ISupervisorsThesisService
         }
 
         _supervisorsThesisDal.Delete(supervisorsThesis);
-        _supervisorsThesisDal.SaveChanges();
         return new SuccessResult();
     }
 }

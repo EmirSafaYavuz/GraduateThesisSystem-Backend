@@ -22,7 +22,6 @@ public class LocationManager : ILocationService
     public IDataResult<Location> Add(Location location)
     {
         var addedLocation = _locationDal.Add(location);
-        _locationDal.SaveChanges();
         return new SuccessDataResult<Location>(addedLocation);
     }
 
@@ -35,7 +34,12 @@ public class LocationManager : ILocationService
         }
 
         _locationDal.Delete(location);
-        _locationDal.SaveChanges();
         return new SuccessResult();
+    }
+
+    public IDataResult<int> GetCount()
+    {
+        var count = _locationDal.GetCount();
+        return new SuccessDataResult<int>(count);
     }
 }

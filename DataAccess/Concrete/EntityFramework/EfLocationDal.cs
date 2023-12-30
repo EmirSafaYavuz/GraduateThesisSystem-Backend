@@ -7,7 +7,5 @@ namespace DataAccess.Concrete.EntityFramework;
 
 public class EfLocationDal : EfEntityRepositoryBase<Location, MyDbContext>, ILocationDal
 {
-    public EfLocationDal(MyDbContext context) : base(context)
-    {
-    }
+    
 }

@@ -20,9 +20,5 @@ namespace DataAccess.Concrete.EntityFramework
 
             }
         }
-
-        public EfUserDal(MyDbContext context) : base(context)
-        {
-        }
     }
 }

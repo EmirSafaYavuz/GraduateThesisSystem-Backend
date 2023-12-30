@@ -1,5 +1,6 @@
 using Business.Abstract;
 using DataAccess.Entities;
+using DataAccess.Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,6 +30,46 @@ namespace WebAPI.Controllers
         public IActionResult GetAll()
         {
             var result = _supervisorService.GetAll();
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+
+            return BadRequest("Hata oluştu");
+        }
+        
+        /// <summary>
+        /// Get Supervisor.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Supervisor))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [HttpGet("{id}")]
+        public IActionResult GetById([FromRoute] int id)
+        {
+            var result = _supervisorService.GetById(id);
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+
+            return BadRequest("Hata oluştu");
+        }
+        
+        /// <summary>
+        /// Get Theses Of Supervisor.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ThesisDetailDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [HttpGet("{id}/theses")]
+        public IActionResult GetThesesBySupervisorId(int id)
+        {
+            var result = _supervisorService.GetThesesBySupervisorId(id);
             if (result.Success)
             {
                 return Ok(result.Data);

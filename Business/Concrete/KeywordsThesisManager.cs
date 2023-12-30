@@ -22,7 +22,6 @@ public class KeywordsThesisManager : IKeywordsThesisService
     public IDataResult<KeywordsThesis> Add(KeywordsThesis keywordsThesis)
     {
         var addedKeywordsThesis = _keywordsThesisDal.Add(keywordsThesis);
-        _keywordsThesisDal.SaveChanges();
         return new SuccessDataResult<KeywordsThesis>(addedKeywordsThesis);
     }
 
@@ -35,7 +34,6 @@ public class KeywordsThesisManager : IKeywordsThesisService
         }
 
         _keywordsThesisDal.Delete(keywordsThesis);
-        _keywordsThesisDal.SaveChanges();
         return new SuccessResult();
     }
 }

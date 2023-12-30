@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using Core.Entities.Concrete;
 using DataAccess.Entities;
+using DataAccess.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace DataAccess.Context;
 
@@ -10,12 +12,12 @@ public partial class MyDbContext : DbContext
 {
     public MyDbContext()
     {
+        NpgsqlConnection.GlobalTypeMapper.MapEnum<ThesisType>();
     }
 
     public MyDbContext(DbContextOptions<MyDbContext> options)
         : base(options)
-    {
-    }
+    { }
 
     public virtual DbSet<Author> Authors { get; set; }
 
@@ -45,8 +47,12 @@ public partial class MyDbContext : DbContext
     public virtual DbSet<UserOperationClaim> UserOperationClaims { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=GraduateThesisSystem;Username=emirsafayavuz;Password=12345");
+    {
+        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=GraduateThesisSystem;Username=emirsafayavuz;Password=12345", npgsqlOptions =>
+        {
+            
+        });
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

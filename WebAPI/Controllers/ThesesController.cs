@@ -1,5 +1,6 @@
 using Business.Abstract;
 using DataAccess.Entities;
+using DataAccess.Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +24,7 @@ namespace WebAPI.Controllers
         ///<return>List theses</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Thesis>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ThesisDetailDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet]
         public IActionResult GetAll()

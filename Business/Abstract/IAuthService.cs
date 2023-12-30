@@ -4,7 +4,7 @@ using System.Text;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Jwt;
-using Entities.Dtos;
+using DataAccess.Entities.Dtos;
 
 namespace Business.Abstract
 {

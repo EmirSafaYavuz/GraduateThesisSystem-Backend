@@ -22,7 +22,6 @@ public class SubjectTopicsThesisManager : ISubjectTopicsThesisService
     public IDataResult<SubjectTopicsThesis> Add(SubjectTopicsThesis subjectTopicsThesis)
     {
         var addedSubjectTopicsThesis = _subjectTopicsThesisDal.Add(subjectTopicsThesis);
-        _subjectTopicsThesisDal.SaveChanges();
         return new SuccessDataResult<SubjectTopicsThesis>(addedSubjectTopicsThesis);
     }
 
@@ -35,7 +34,6 @@ public class SubjectTopicsThesisManager : ISubjectTopicsThesisService
         }
 
         _subjectTopicsThesisDal.Delete(subjectTopicsThesis);
-        _subjectTopicsThesisDal.SaveChanges();
         return new SuccessResult(); 
     }
 }

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core.Entities;
+﻿using Core.Entities;
 
-namespace Entities.Dtos
+namespace DataAccess.Entities.Dtos
 {
     public class UserForRegisterDto : IDto
     {

@@ -22,7 +22,6 @@ public class LanguageManager : ILanguageService
     public IDataResult<Language> Add(Language language)
     {
         var addedLanguage = _languageDal.Add(language);
-        _languageDal.SaveChanges();
         return new SuccessDataResult<Language>(addedLanguage);
     }
 
@@ -35,7 +34,12 @@ public class LanguageManager : ILanguageService
         }
 
         _languageDal.Delete(language);
-        _languageDal.SaveChanges();
         return new SuccessResult();
+    }
+
+    public IDataResult<int> GetCount()
+    {
+        var count = _languageDal.GetCount();
+        return new SuccessDataResult<int>(count);
     }
 }

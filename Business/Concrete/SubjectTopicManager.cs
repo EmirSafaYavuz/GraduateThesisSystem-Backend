@@ -22,7 +22,6 @@ public class SubjectTopicManager : ISubjectTopicService
     public IDataResult<SubjectTopic> Add(SubjectTopic subjectTopic)
     {
         var addedSubjectTopic = _subjectTopicDal.Add(subjectTopic);
-        _subjectTopicDal.SaveChanges();
         return new SuccessDataResult<SubjectTopic>(addedSubjectTopic);
     }
 
@@ -35,7 +34,12 @@ public class SubjectTopicManager : ISubjectTopicService
         }
 
         _subjectTopicDal.Delete(subjectTopic);
-        _subjectTopicDal.SaveChanges();
         return new SuccessResult();
+    }
+
+    public IDataResult<int> GetCount()
+    {
+        var count = _subjectTopicDal.GetCount();
+        return new SuccessDataResult<int>(count);
     }
 }

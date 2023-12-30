@@ -2,6 +2,7 @@ using Business.Abstract;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Entities;
+using DataAccess.Entities.Dtos;
 
 namespace Business.Concrete;
 
@@ -22,7 +23,6 @@ public class KeywordManager : IKeywordService
     public IDataResult<Keyword> Add(Keyword keyword)
     {
         var addedKeyword = _keywordDal.Add(keyword);
-        _keywordDal.SaveChanges();
         return new SuccessDataResult<Keyword>(addedKeyword);
     }
 
@@ -35,7 +35,17 @@ public class KeywordManager : IKeywordService
         }
 
         _keywordDal.Delete(keyword);
-        _keywordDal.SaveChanges();
         return new SuccessResult();
+    }
+
+    public IDataResult<int> GetCount()
+    {
+        return new SuccessDataResult<int>(_keywordDal.GetCount());
+    }
+
+    public IDataResult<IEnumerable<ThesisDetailDto>> GetThesesByKeywordId(int id)
+    {
+        var result = _keywordDal.GetThesesByKeywordId(id);
+        return new SuccessDataResult<IEnumerable<ThesisDetailDto>>(result);
     }
 }

@@ -7,7 +7,5 @@ namespace DataAccess.Concrete.EntityFramework;
 
 public class EfLanguageDal : EfEntityRepositoryBase<Language, MyDbContext>, ILanguageDal
 {
-    public EfLanguageDal(MyDbContext context) : base(context)
-    {
-    }
+    
 }

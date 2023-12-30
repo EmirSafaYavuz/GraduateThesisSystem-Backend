@@ -15,6 +15,9 @@ namespace Business.DependencyResolvers.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<SearchManager>().As<ISearchService>();
+            builder.RegisterType<EfSearchDal>().As<ISearchDal>();
+            
             builder.RegisterType<AuthorManager>().As<IAuthorService>();
             builder.RegisterType<EfAuthorDal>().As<IAuthorDal>();
             
@@ -56,9 +59,7 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
-
-            builder.RegisterType<MyDbContext>().InstancePerLifetimeScope();
-
+            
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
@@ -66,6 +67,7 @@ namespace Business.DependencyResolvers.Autofac
                 {
                     Selector = new AspectInterceptorSelector()
                 }).SingleInstance();
+            
         }
     }
 }

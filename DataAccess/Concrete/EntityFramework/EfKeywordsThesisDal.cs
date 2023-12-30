@@ -7,7 +7,5 @@ namespace DataAccess.Concrete.EntityFramework;
 
 public class EfKeywordsThesisDal : EfEntityRepositoryBase<KeywordsThesis, MyDbContext>, IKeywordsThesisDal
 {
-    public EfKeywordsThesisDal(MyDbContext context) : base(context)
-    {
-    }
+    
 }

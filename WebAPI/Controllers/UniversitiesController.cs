@@ -1,7 +1,9 @@
 using Business.Abstract;
 using DataAccess.Entities;
+using DataAccess.Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Dtos;
 
 namespace WebAPI.Controllers
 {
@@ -23,7 +25,7 @@ namespace WebAPI.Controllers
         ///<return>List universities</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<University>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UniversityDetailDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet]
         public IActionResult GetAll()
@@ -37,6 +39,49 @@ namespace WebAPI.Controllers
             return BadRequest("Hata oluştu");
         }
         
+        ///<summary>
+        ///Get University
+        ///</summary>
+        ///<remarks>University</remarks>
+        ///<return>university</return>
+        ///<response code="200"></response>
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UniversityDetailDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [HttpGet("{id:int}")]
+        public IActionResult GetById([FromRoute] int id)
+        {
+            var result = _universityService.GetById(id);
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+
+            return BadRequest("Hata oluştu");
+        }
+        
+        ///<summary>
+        /// Get Institutes by University Id
+        ///</summary>
+        ///<remarks>Institutes</remarks>
+        ///<return>Institutes</return>
+        ///<response code="200"></response>
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Institute>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [HttpGet("{id:int}/institutes")]
+        public IActionResult GetInstitutesByUniversityId([FromRoute] int id)
+        {
+            var result = _universityService.GetInstitutesByUniversityId(id);
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+
+            return BadRequest("Hata oluştu");
+        }
+        
+        
         /// <summary>
         /// Add University.
         /// </summary>
@@ -46,9 +91,14 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(University))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost]
-        public IActionResult Add([FromBody] University university)
+        public IActionResult Add([FromBody] UniversityAddDto university)
         {
-            var result = _universityService.Add(university);
+            var newUniversity = new University
+            {
+                Name = university.Name,
+                LocationId = university.LocationId
+            };
+            var result = _universityService.Add(newUniversity);
             if (result.Success)
             {
                 return Ok(result.Data);

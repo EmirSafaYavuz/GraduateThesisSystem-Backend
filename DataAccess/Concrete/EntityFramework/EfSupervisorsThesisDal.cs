@@ -7,7 +7,5 @@ namespace DataAccess.Concrete.EntityFramework;
 
 public class EfSupervisorsThesisDal : EfEntityRepositoryBase<SupervisorsThesis, MyDbContext>, ISupervisorsThesisDal
 {
-    public EfSupervisorsThesisDal(MyDbContext context) : base(context)
-    {
-    }
+    
 }

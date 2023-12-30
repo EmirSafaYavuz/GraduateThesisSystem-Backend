@@ -2,6 +2,7 @@ using Business.Abstract;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Entities;
+using DataAccess.Entities.Dtos;
 
 namespace Business.Concrete;
 
@@ -14,15 +15,14 @@ public class InstituteManager : IInstituteService
         _instituteDal = instituteDal;
     }
 
-    public IDataResult<IEnumerable<Institute>> GetAll()
+    public IDataResult<IEnumerable<InstituteDetailDto>> GetAll()
     {
-        return new SuccessDataResult<IEnumerable<Institute>>(_instituteDal.GetList());
+        return new SuccessDataResult<IEnumerable<InstituteDetailDto>>(_instituteDal.GetListDetailDto());
     }
 
     public IDataResult<Institute> Add(Institute institute)
     {
         var addedInstitute = _instituteDal.Add(institute);
-        _instituteDal.SaveChanges();
         return new SuccessDataResult<Institute>(addedInstitute);
     }
 
@@ -35,7 +35,12 @@ public class InstituteManager : IInstituteService
         }
 
         _instituteDal.Delete(institute);
-        _instituteDal.SaveChanges();
         return new SuccessResult();
+    }
+
+    public IDataResult<int> GetCount()
+    {
+        var count = _instituteDal.GetCount();
+        return new SuccessDataResult<int>(count);
     }
 }

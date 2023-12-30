@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Core.Entities;
+using DataAccess.Entities.Enums;
 
 namespace DataAccess.Entities;
 
@@ -45,4 +47,6 @@ public partial class Thesis : IEntity
     public virtual Supervisor Supervisor { get; set; } = null!;
 
     public virtual ICollection<SupervisorsThesis> SupervisorsTheses { get; set; } = new List<SupervisorsThesis>();
+    [Column("thesis_type")]
+    public virtual ThesisType ThesisType { get; set; }
 }

@@ -8,4 +8,5 @@ public interface ILocationService
     IDataResult<IEnumerable<Location>> GetAll();
     IDataResult<Location> Add(Location location);
     IResult Delete(int id);
+    IDataResult<int> GetCount();
 }

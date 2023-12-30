@@ -12,7 +12,7 @@ public partial class Institute : IEntity
 
     public int UniversityId { get; set; }
 
-    public virtual ICollection<Thesis> Theses { get; set; } = new List<Thesis>();
+    public ICollection<Thesis> Theses { get; set; } = new List<Thesis>();
 
-    public virtual University University { get; set; } = null!;
+    public University University { get; set; } = null!;
 }

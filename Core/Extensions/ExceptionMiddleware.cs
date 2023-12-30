@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using FluentValidation;
@@ -25,7 +26,7 @@ namespace Core.Extensions
             }
             catch (Exception e)
             {
-                await HandleExceptionAsync(httpContext,e);
+               await HandleExceptionAsync(httpContext,e);
             }
         }
 
@@ -35,9 +36,15 @@ namespace Core.Extensions
             httpContext.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
 
             string message = "Internal Server Error";
-            if (e.GetType()==typeof(ValidationException))
+            if (e is ValidationException)
             {
+                httpContext.Response.StatusCode = (int) HttpStatusCode.BadRequest;
                 message = e.Message;
+            }
+            else if (e is TargetInvocationException && e.InnerException != null)
+            {
+                httpContext.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+                message = e.InnerException.Message;
             }
 
             return httpContext.Response.WriteAsync(new ErrorDetails

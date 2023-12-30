@@ -1,7 +1,9 @@
 using Business.Abstract;
 using DataAccess.Entities;
+using DataAccess.Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Dtos;
 
 namespace WebAPI.Controllers
 {
@@ -38,6 +40,27 @@ namespace WebAPI.Controllers
             return BadRequest("Hata oluştu");
         }
         
+        ///<summary>
+        ///Get Author
+        ///</summary>
+        ///<remarks>Author</remarks>
+        ///<return>author</return>
+        ///<response code="200"></response>
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Author))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [HttpGet("{id:int}")]
+        public IActionResult GetById([FromRoute] int id)
+        {
+            var result = _authorService.GetById(id);
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+
+            return BadRequest("Hata oluştu");
+        }
+        
         /// <summary>
         /// Add Author.
         /// </summary>
@@ -47,15 +70,20 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Author))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost]
-        public IActionResult Add([FromBody] Author author)
+        public IActionResult Add([FromBody] AuthorAddDto author)
         {
-            var result = _authorService.Add(author);
+            var newAuthor = new Author
+            {
+                Name = author.Name,
+                Email = author.Email
+            };
+            var result = _authorService.Add(newAuthor);
             if (result.Success)
             {
                 return Ok(result.Data);
             }
 
-            return BadRequest("Hata oluştu");
+            return BadRequest(result.Message);
         }
         
         /// <summary>
@@ -67,12 +95,33 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult Delete(int id)
         {
-            var result = await _authorService.Delete(id);
+            var result = _authorService.Delete(id);
             if (result.Success)
             {
                 return Ok(result.Message);
+            }
+
+            return BadRequest("Hata oluştu");
+        }
+        
+        ///<summary>
+        ///Get Theses By Author Id
+        ///</summary>
+        ///<remarks>Theses</remarks>
+        ///<return>theses</return>
+        ///<response code="200"></response>
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ThesisDetailDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [HttpGet("{id:int}/theses")]
+        public IActionResult GetThesesByAuthorId([FromRoute] int id)
+        {
+            var result = _authorService.GetThesesByAuthorId(id);
+            if (result.Success)
+            {
+                return Ok(result.Data);
             }
 
             return BadRequest("Hata oluştu");

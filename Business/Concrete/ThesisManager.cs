@@ -1,7 +1,9 @@
 using Business.Abstract;
+using Core.Aspects.Autofac.Transaction;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Entities;
+using DataAccess.Entities.Dtos;
 
 namespace Business.Concrete;
 
@@ -14,15 +16,14 @@ public class ThesisManager : IThesisService
         _thesisDal = thesisDal;
     }
 
-    public IDataResult<IEnumerable<Thesis>> GetAll()
+    public IDataResult<IEnumerable<ThesisDetailDto>> GetAll()
     {
-        return new SuccessDataResult<IEnumerable<Thesis>>(_thesisDal.GetList());
+        return new SuccessDataResult<IEnumerable<ThesisDetailDto>>(_thesisDal.GetListDetailDto());
     }
 
     public IDataResult<Thesis> Add(Thesis thesis)
     {
         var addedThesis = _thesisDal.Add(thesis);
-        _thesisDal.SaveChanges();
         return new SuccessDataResult<Thesis>(addedThesis);
     }
 
@@ -35,7 +36,12 @@ public class ThesisManager : IThesisService
         }
 
         _thesisDal.Delete(thesis);
-        _thesisDal.SaveChanges();
         return new SuccessResult();
+    }
+
+    public IDataResult<int> GetCount()
+    {
+        var count = _thesisDal.GetCount();
+        return new SuccessDataResult<int>(count);
     }
 }

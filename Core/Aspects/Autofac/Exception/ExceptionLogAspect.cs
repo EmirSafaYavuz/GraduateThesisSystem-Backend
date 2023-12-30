@@ -33,14 +33,21 @@ namespace Core.Aspects.Autofac.Exception
         {
             var logParameters = new List<LogParameter>();
 
-            for (int i = 0; i < invocation.Arguments.Length; i++)
+            var concreteMethod = invocation.GetConcreteMethod();
+
+            if (concreteMethod != null)
             {
-                logParameters.Add(new LogParameter
+                var parameters = concreteMethod.GetParameters();
+
+                for (int i = 0; i < invocation.Arguments.Length && i < parameters.Length; i++)
                 {
-                    Name= invocation.GetConcreteMethod().GetParameters()[i].Name,
-                    Value = invocation.Arguments[i],
-                    Type = invocation.Arguments[i].GetType().Name
-                });
+                    logParameters.Add(new LogParameter
+                    {
+                        Name = parameters[i].Name,
+                        Value = invocation.Arguments[i],
+                        Type = invocation.Arguments[i]?.GetType()?.Name ?? "Unknown"
+                    });
+                }
             }
 
             var logDetailWithException = new LogDetailWithException
@@ -51,5 +58,6 @@ namespace Core.Aspects.Autofac.Exception
 
             return logDetailWithException;
         }
+
     }
 }

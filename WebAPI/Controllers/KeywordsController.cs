@@ -1,5 +1,7 @@
+using System.Collections;
 using Business.Abstract;
 using DataAccess.Entities;
+using DataAccess.Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,6 +31,27 @@ namespace WebAPI.Controllers
         public IActionResult GetAll()
         {
             var result = _keywordService.GetAll();
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+
+            return BadRequest("Hata oluştu");
+        }
+        
+        ///<summary>
+        ///Get Theses By Keyword Id
+        ///</summary>
+        ///<remarks>Theses</remarks>
+        ///<return>theses</return>
+        ///<response code="200"></response>
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ThesisDetailDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [HttpGet("{id:int}/theses")]
+        public IActionResult GetById([FromRoute] int id)
+        {
+            var result = _keywordService.GetThesesByKeywordId(id);
             if (result.Success)
             {
                 return Ok(result.Data);
