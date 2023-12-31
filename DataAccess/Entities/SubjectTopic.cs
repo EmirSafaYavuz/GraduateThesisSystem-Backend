@@ -9,6 +9,4 @@ public partial class SubjectTopic : IEntity
     public int Id { get; set; }
 
     public string Name { get; set; } = null!;
-
-    public virtual ICollection<SubjectTopicsThesis> SubjectTopicsTheses { get; set; } = new List<SubjectTopicsThesis>();
 }

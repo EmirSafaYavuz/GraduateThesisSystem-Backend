@@ -11,6 +11,4 @@ public partial class Location : IEntity
     public string City { get; set; } = null!;
 
     public string Country { get; set; } = null!;
-
-    public virtual ICollection<University> Universities { get; set; } = new List<University>();
 }

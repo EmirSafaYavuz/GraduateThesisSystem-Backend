@@ -12,5 +12,4 @@ public partial class Author : IEntity
     public string Name { get; set; } = null!;
 
     public string Email { get; set; } = null!;
-    public virtual ICollection<Thesis> Theses { get; set; } = new List<Thesis>();
 }

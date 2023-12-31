@@ -5,7 +5,6 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Entities;
 using DataAccess.Entities.Dtos;
-using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concrete;
 

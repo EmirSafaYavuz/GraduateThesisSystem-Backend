@@ -11,8 +11,4 @@ public partial class KeywordsThesis : IEntity
     public int KeywordId { get; set; }
 
     public int ThesisId { get; set; }
-
-    public virtual Keyword Keyword { get; set; } = null!;
-
-    public virtual Thesis Thesis { get; set; } = null!;
 }

@@ -2,6 +2,7 @@ using DataAccess.Abstract;
 using DataAccess.Entities;
 using DataAccess.Entities.Dtos;
 using DataAccess.Entities.Enums;
+using Microsoft.Extensions.Configuration;
 
 namespace DataAccess.Concrete.AdoNet;
 

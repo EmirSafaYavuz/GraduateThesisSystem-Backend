@@ -16,7 +16,7 @@ namespace DataAccess.Concrete.AdoNet
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        private readonly string _tableName = "Authors";
+        private readonly string _tableName = "authors";
 
         public Author GetById(int id)
         {
@@ -39,8 +39,8 @@ namespace DataAccess.Concrete.AdoNet
                             author = new Author
                             {
                                 Id = (int)reader["Id"],
-                                Name = reader["Name"].ToString(),
-                                Email = reader["Email"].ToString()
+                                Name = (string)reader["Name"],
+                                Email = (string)reader["Email"]
                             };
                         }
                     }

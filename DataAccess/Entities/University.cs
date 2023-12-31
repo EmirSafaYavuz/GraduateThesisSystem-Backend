@@ -11,8 +11,4 @@ public partial class University : IEntity
     public string Name { get; set; } = null!;
 
     public int LocationId { get; set; }
-
-    public virtual ICollection<Institute> Institutes { get; set; } = new List<Institute>();
-
-    public virtual Location Location { get; set; } = null!;
 }

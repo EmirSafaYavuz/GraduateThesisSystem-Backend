@@ -31,22 +31,6 @@ public partial class Thesis : IEntity
     public int InstituteId { get; set; }
 
     public int SupervisorId { get; set; }
-
-    public virtual Author Author { get; set; } = null!;
-
-    public virtual Supervisor? CoSupervisor { get; set; }
-
-    public virtual Institute Institute { get; set; } = null!;
-
-    public virtual ICollection<KeywordsThesis> KeywordsTheses { get; set; } = new List<KeywordsThesis>();
-
-    public virtual Language Language { get; set; } = null!;
-
-    public virtual ICollection<SubjectTopicsThesis> SubjectTopicsTheses { get; set; } = new List<SubjectTopicsThesis>();
-
-    public virtual Supervisor Supervisor { get; set; } = null!;
-
-    public virtual ICollection<SupervisorsThesis> SupervisorsTheses { get; set; } = new List<SupervisorsThesis>();
     [Column("thesis_type")]
     public virtual ThesisType ThesisType { get; set; }
 }

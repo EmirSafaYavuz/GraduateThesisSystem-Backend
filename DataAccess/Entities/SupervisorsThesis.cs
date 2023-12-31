@@ -11,8 +11,4 @@ public partial class SupervisorsThesis : IEntity
     public int SupervisorId { get; set; }
 
     public int ThesisId { get; set; }
-
-    public virtual Supervisor Supervisor { get; set; } = null!;
-
-    public virtual Thesis Thesis { get; set; } = null!;
 }

@@ -2,14 +2,52 @@ using System.Linq.Expressions;
 using DataAccess.Abstract;
 using DataAccess.Entities;
 using DataAccess.Entities.Dtos;
+using Microsoft.Extensions.Configuration;
+using Npgsql;
 
 namespace DataAccess.Concrete.AdoNet;
 
 public class AnUniversityDal : IUniversityDal
 {
+    private readonly string _connectionString;
+
+    public AnUniversityDal(IConfiguration configuration)
+    {
+        _connectionString = configuration.GetConnectionString("DefaultConnection");
+    }
+
+    private readonly string _tableName = "universities";
+    
     public University GetById(int id)
     {
-        throw new NotImplementedException();
+        University university = null;
+
+        using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
+        {
+            connection.Open();
+
+            string commandText = $"SELECT * FROM {_tableName} WHERE Id = @Id";
+
+            using (NpgsqlCommand command = new NpgsqlCommand(commandText, connection))
+            {
+                command.Parameters.AddWithValue("@Id", id);
+
+                using (NpgsqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        university = new University
+                        {
+                            Id = (int)reader["Id"],
+                            Name = (string)reader["Name"],
+                            LocationId = (int)reader["LocationId"]
+                        };
+                    }
+                }
+            }
+        }
+
+        return university;
     }
 
     public IList<University> GetAll()
