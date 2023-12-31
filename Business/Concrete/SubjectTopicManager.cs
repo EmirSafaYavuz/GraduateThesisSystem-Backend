@@ -16,7 +16,7 @@ public class SubjectTopicManager : ISubjectTopicService
 
     public IDataResult<IEnumerable<SubjectTopic>> GetAll()
     {
-        return new SuccessDataResult<IEnumerable<SubjectTopic>>(_subjectTopicDal.GetList());
+        return new SuccessDataResult<IEnumerable<SubjectTopic>>(_subjectTopicDal.GetAll());
     }
 
     public IDataResult<SubjectTopic> Add(SubjectTopic subjectTopic)
@@ -27,7 +27,7 @@ public class SubjectTopicManager : ISubjectTopicService
 
     public IResult Delete(int id)
     {
-        var subjectTopic = _subjectTopicDal.Get(i => i.Id == id);
+        var subjectTopic = _subjectTopicDal.GetById(id);
         if (subjectTopic is null)
         {
             return new ErrorResult("SubjectTopic not found");
@@ -37,9 +37,9 @@ public class SubjectTopicManager : ISubjectTopicService
         return new SuccessResult();
     }
 
-    public IDataResult<int> GetCount()
+    public IDataResult<long> GetCount()
     {
         var count = _subjectTopicDal.GetCount();
-        return new SuccessDataResult<int>(count);
+        return new SuccessDataResult<long>(count);
     }
 }

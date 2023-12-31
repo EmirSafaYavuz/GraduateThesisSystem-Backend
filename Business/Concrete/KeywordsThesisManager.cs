@@ -16,7 +16,7 @@ public class KeywordsThesisManager : IKeywordsThesisService
 
     public IDataResult<IEnumerable<KeywordsThesis>> GetAll()
     {
-        return new SuccessDataResult<IEnumerable<KeywordsThesis>>(_keywordsThesisDal.GetList());
+        return new SuccessDataResult<IEnumerable<KeywordsThesis>>(_keywordsThesisDal.GetAll());
     }
 
     public IDataResult<KeywordsThesis> Add(KeywordsThesis keywordsThesis)
@@ -27,7 +27,7 @@ public class KeywordsThesisManager : IKeywordsThesisService
 
     public IResult Delete(int id)
     {
-        var keywordsThesis = _keywordsThesisDal.Get(i => i.Id == id);
+        var keywordsThesis = _keywordsThesisDal.GetById(id);
         if (keywordsThesis is null)
         {
             return new ErrorResult("KeywordsThesis not found");

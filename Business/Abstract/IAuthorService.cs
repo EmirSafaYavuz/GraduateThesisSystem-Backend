@@ -10,6 +10,7 @@ public interface IAuthorService
     IDataResult<Author> GetById(int id);
     IDataResult<IEnumerable<ThesisDetailDto>> GetThesesByAuthorId(int id);
     IDataResult<Author> Add(Author author);
+    IDataResult<Author> Update(Author author);
     IResult Delete(int id);
-    IDataResult<int> GetCount();
+    IDataResult<long> GetCount();
 }

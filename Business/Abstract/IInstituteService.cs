@@ -9,5 +9,5 @@ public interface IInstituteService
     IDataResult<IEnumerable<InstituteDetailDto>> GetAll();
     IDataResult<Institute> Add(Institute institute);
     IResult Delete(int id);
-    IDataResult<int> GetCount();
+    IDataResult<long> GetCount();
 }

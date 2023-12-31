@@ -11,5 +11,5 @@ public interface IUniversityService
     IDataResult<IEnumerable<InstituteDetailDto>> GetInstitutesByUniversityId(int id);
     IDataResult<University> Add(University university);
     IResult Delete(int id);
-    IDataResult<int> GetCount();
+    IDataResult<long> GetCount();
 }

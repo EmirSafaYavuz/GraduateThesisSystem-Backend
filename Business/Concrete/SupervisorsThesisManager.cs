@@ -16,7 +16,7 @@ public class SupervisorsThesisManager : ISupervisorsThesisService
 
     public IDataResult<IEnumerable<SupervisorsThesis>> GetAll()
     {
-        return new SuccessDataResult<IEnumerable<SupervisorsThesis>>(_supervisorsThesisDal.GetList());
+        return new SuccessDataResult<IEnumerable<SupervisorsThesis>>(_supervisorsThesisDal.GetAll());
     }
 
     public IDataResult<SupervisorsThesis> Add(SupervisorsThesis supervisorsThesis)
@@ -27,7 +27,7 @@ public class SupervisorsThesisManager : ISupervisorsThesisService
 
     public IResult Delete(int id)
     {
-        var supervisorsThesis = _supervisorsThesisDal.Get(i => i.Id == id);
+        var supervisorsThesis = _supervisorsThesisDal.GetById(id);
         if (supervisorsThesis is null)
         {
             return new ErrorResult("SupervisorsThesis not found");

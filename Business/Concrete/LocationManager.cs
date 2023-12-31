@@ -16,7 +16,7 @@ public class LocationManager : ILocationService
 
     public IDataResult<IEnumerable<Location>> GetAll()
     {
-        return new SuccessDataResult<IEnumerable<Location>>(_locationDal.GetList());
+        return new SuccessDataResult<IEnumerable<Location>>(_locationDal.GetAll());
     }
 
     public IDataResult<Location> Add(Location location)
@@ -27,7 +27,7 @@ public class LocationManager : ILocationService
 
     public IResult Delete(int id)
     {
-        var location = _locationDal.Get(i => i.Id == id);
+        var location = _locationDal.GetById(id);
         if (location is null)
         {
             return new ErrorResult("Location not found");
@@ -37,9 +37,9 @@ public class LocationManager : ILocationService
         return new SuccessResult();
     }
 
-    public IDataResult<int> GetCount()
+    public IDataResult<long> GetCount()
     {
         var count = _locationDal.GetCount();
-        return new SuccessDataResult<int>(count);
+        return new SuccessDataResult<long>(count);
     }
 }

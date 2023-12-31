@@ -17,7 +17,7 @@ public class KeywordManager : IKeywordService
 
     public IDataResult<IEnumerable<Keyword>> GetAll()
     {
-        return new SuccessDataResult<IEnumerable<Keyword>>(_keywordDal.GetList());
+        return new SuccessDataResult<IEnumerable<Keyword>>(_keywordDal.GetAll());
     }
 
     public IDataResult<Keyword> Add(Keyword keyword)
@@ -28,7 +28,7 @@ public class KeywordManager : IKeywordService
 
     public IResult Delete(int id)
     {
-        var keyword = _keywordDal.Get(i => i.Id == id);
+        var keyword = _keywordDal.GetById(id);
         if (keyword is null)
         {
             return new ErrorResult("Keyword not found");
@@ -38,9 +38,9 @@ public class KeywordManager : IKeywordService
         return new SuccessResult();
     }
 
-    public IDataResult<int> GetCount()
+    public IDataResult<long> GetCount()
     {
-        return new SuccessDataResult<int>(_keywordDal.GetCount());
+        return new SuccessDataResult<long>(_keywordDal.GetCount());
     }
 
     public IDataResult<IEnumerable<ThesisDetailDto>> GetThesesByKeywordId(int id)

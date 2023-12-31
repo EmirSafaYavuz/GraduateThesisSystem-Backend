@@ -106,6 +106,27 @@ namespace WebAPI.Controllers
             return BadRequest("Hata oluştu");
         }
         
+        /// <summary>
+        /// Update an existing author.
+        /// </summary>
+        /// <param name="id">Author ID.</param>
+        /// <param name="author">The updated author information.</param>
+        /// <returns>Returns the updated author.</returns>
+        [HttpPut("{id}")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Author))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        public IActionResult UpdateAuthor(int id, [FromBody] Author author)
+        {
+            author.Id = id;
+            var result = _authorService.Update(author);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        
         ///<summary>
         ///Get Theses By Author Id
         ///</summary>
@@ -125,6 +146,19 @@ namespace WebAPI.Controllers
             }
 
             return BadRequest("Hata oluştu");
+        }
+        
+        /// <summary>
+        /// Get the count of authors.
+        /// </summary>
+        /// <returns>Returns the count of authors.</returns>
+        [HttpGet("count")]
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
+        public IActionResult GetAuthorCount()
+        {
+            var result = _authorService.GetCount();
+            return Ok(result);
         }
     }
 }

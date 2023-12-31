@@ -17,12 +17,12 @@ public class SupervisorManager : ISupervisorService
 
     public IDataResult<IEnumerable<Supervisor>> GetAll()
     {
-        return new SuccessDataResult<IEnumerable<Supervisor>>(_supervisorDal.GetList());
+        return new SuccessDataResult<IEnumerable<Supervisor>>(_supervisorDal.GetAll());
     }
 
     public IDataResult<Supervisor> GetById(int id)
     {
-        var supervisor = _supervisorDal.Get(i => i.Id == id);
+        var supervisor = _supervisorDal.GetById(id);
         if (supervisor is null)
         {
             return new ErrorDataResult<Supervisor>("Supervisor not found");
@@ -39,7 +39,7 @@ public class SupervisorManager : ISupervisorService
 
     public IResult Delete(int id)
     {
-        var supervisor = _supervisorDal.Get(i => i.Id == id);
+        var supervisor = _supervisorDal.GetById(id);
         if (supervisor is null)
         {
             return new ErrorResult("Supervisor not found");
@@ -49,10 +49,10 @@ public class SupervisorManager : ISupervisorService
         return new SuccessResult();
     }
 
-    public IDataResult<int> GetCount()
+    public IDataResult<long> GetCount()
     {
         var count = _supervisorDal.GetCount();
-        return new SuccessDataResult<int>(count);
+        return new SuccessDataResult<long>(count);
     }
 
     public IDataResult<IEnumerable<ThesisDetailDto>> GetThesesBySupervisorId(int id)

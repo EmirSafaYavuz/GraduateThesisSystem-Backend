@@ -9,5 +9,5 @@ public interface IThesisService
     IDataResult<IEnumerable<ThesisDetailDto>> GetAll();
     IDataResult<Thesis> Add(Thesis thesis);
     IResult Delete(int id);
-    IDataResult<int> GetCount();
+    IDataResult<long> GetCount();
 }

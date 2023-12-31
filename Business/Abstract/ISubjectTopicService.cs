@@ -8,5 +8,5 @@ public interface ISubjectTopicService
     IDataResult<IEnumerable<SubjectTopic>> GetAll();
     IDataResult<SubjectTopic> Add(SubjectTopic subjectTopic);
     IResult Delete(int id);
-    IDataResult<int> GetCount();
+    IDataResult<long> GetCount();
 }

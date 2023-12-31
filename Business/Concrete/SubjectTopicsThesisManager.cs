@@ -16,7 +16,7 @@ public class SubjectTopicsThesisManager : ISubjectTopicsThesisService
 
     public IDataResult<IEnumerable<SubjectTopicsThesis>> GetAll()
     {
-        return new SuccessDataResult<IEnumerable<SubjectTopicsThesis>>(_subjectTopicsThesisDal.GetList());
+        return new SuccessDataResult<IEnumerable<SubjectTopicsThesis>>(_subjectTopicsThesisDal.GetAll());
     }
 
     public IDataResult<SubjectTopicsThesis> Add(SubjectTopicsThesis subjectTopicsThesis)
@@ -27,7 +27,7 @@ public class SubjectTopicsThesisManager : ISubjectTopicsThesisService
 
     public IResult Delete(int id)
     {
-        var subjectTopicsThesis = _subjectTopicsThesisDal.Get(i => i.Id == id);
+        var subjectTopicsThesis = _subjectTopicsThesisDal.GetById(id);
         if (subjectTopicsThesis is null)
         {
             return new ErrorResult("SubjectTopicsThesis not found");

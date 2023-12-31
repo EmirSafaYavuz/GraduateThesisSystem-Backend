@@ -20,13 +20,13 @@ public class AuthorManager : IAuthorService
 
     public IDataResult<IEnumerable<Author>> GetAll()
     {
-        var authors = _authorDal.GetList();
+        var authors = _authorDal.GetAll();
         return new SuccessDataResult<IEnumerable<Author>>(authors);
     }
 
     public IDataResult<Author> GetById(int id)
     {
-        var author = _authorDal.Get(a=>a.Id == id);
+        var author = _authorDal.GetById(id);
         if (author == null)
         {
             return new ErrorDataResult<Author>("Author not found");
@@ -48,9 +48,15 @@ public class AuthorManager : IAuthorService
         return new SuccessDataResult<Author>(addedAuthor);
     }
 
+    public IDataResult<Author> Update(Author author)
+    {
+        var updatedAuthor = _authorDal.Update(author);
+        return new SuccessDataResult<Author>(updatedAuthor);
+    }
+
     public IResult Delete(int id)
     {
-        var author = _authorDal.Get(a => a.Id == id);
+        var author = _authorDal.GetById(id);
         if (author == null)
         {
             return new ErrorResult("Author not found");
@@ -60,9 +66,9 @@ public class AuthorManager : IAuthorService
         return new SuccessResult();
     }
 
-    public IDataResult<int> GetCount()
+    public IDataResult<long> GetCount()
     {
         var count = _authorDal.GetCount();
-        return new SuccessDataResult<int>(count);
+        return new SuccessDataResult<long>(count);
     }
 }

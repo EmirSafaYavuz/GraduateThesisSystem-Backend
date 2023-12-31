@@ -50,7 +50,7 @@ public class UniversityManager : IUniversityService
 
     public IResult Delete(int id)
     {
-        var university = _universityDal.Get(i => i.Id == id);
+        var university = _universityDal.GetById(id);
         if (university is null)
         {
             return new ErrorResult("University not found");
@@ -60,9 +60,9 @@ public class UniversityManager : IUniversityService
         return new SuccessResult();
     }
 
-    public IDataResult<int> GetCount()
+    public IDataResult<long> GetCount()
     {
         var count = _universityDal.GetCount();
-        return new SuccessDataResult<int>(count);
+        return new SuccessDataResult<long>(count);
     }
 }

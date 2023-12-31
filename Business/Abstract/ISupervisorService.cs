@@ -10,6 +10,6 @@ public interface ISupervisorService
     IDataResult<Supervisor> GetById(int id);
     IDataResult<Supervisor> Add(Supervisor supervisor);
     IResult Delete(int id);
-    IDataResult<int> GetCount();
+    IDataResult<long> GetCount();
     IDataResult<IEnumerable<ThesisDetailDto>> GetThesesBySupervisorId(int id);
 }

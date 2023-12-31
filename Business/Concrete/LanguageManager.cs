@@ -16,7 +16,7 @@ public class LanguageManager : ILanguageService
 
     public IDataResult<IEnumerable<Language>> GetAll()
     {
-        return new SuccessDataResult<IEnumerable<Language>>(_languageDal.GetList());
+        return new SuccessDataResult<IEnumerable<Language>>(_languageDal.GetAll());
     }
 
     public IDataResult<Language> Add(Language language)
@@ -27,7 +27,7 @@ public class LanguageManager : ILanguageService
 
     public IResult Delete(int id)
     {
-        var language = _languageDal.Get(i => i.Id == id);
+        var language = _languageDal.GetById(id);
         if (language is null)
         {
             return new ErrorResult("Language not found");
@@ -37,9 +37,9 @@ public class LanguageManager : ILanguageService
         return new SuccessResult();
     }
 
-    public IDataResult<int> GetCount()
+    public IDataResult<long> GetCount()
     {
         var count = _languageDal.GetCount();
-        return new SuccessDataResult<int>(count);
+        return new SuccessDataResult<long>(count);
     }
 }

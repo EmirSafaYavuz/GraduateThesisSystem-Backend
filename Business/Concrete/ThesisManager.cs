@@ -29,7 +29,7 @@ public class ThesisManager : IThesisService
 
     public IResult Delete(int id)
     {
-        var thesis = _thesisDal.Get(i => i.Id == id);
+        var thesis = _thesisDal.GetById(id);
         if (thesis is null)
         {
             return new ErrorResult("Thesis not found");
@@ -39,9 +39,9 @@ public class ThesisManager : IThesisService
         return new SuccessResult();
     }
 
-    public IDataResult<int> GetCount()
+    public IDataResult<long> GetCount()
     {
         var count = _thesisDal.GetCount();
-        return new SuccessDataResult<int>(count);
+        return new SuccessDataResult<long>(count);
     }
 }

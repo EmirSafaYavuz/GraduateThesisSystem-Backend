@@ -8,5 +8,5 @@ public interface ILanguageService
     IDataResult<IEnumerable<Language>> GetAll();
     IDataResult<Language> Add(Language language);
     IResult Delete(int id);
-    IDataResult<int> GetCount();
+    IDataResult<long> GetCount();
 }
