@@ -4,7 +4,7 @@ using Core.Entities;
 
 namespace DataAccess.Entities;
 
-public partial class University : IEntity
+public class University : IEntity
 {
     public int Id { get; set; }
 

@@ -50,26 +50,104 @@ public class AnSubjectTopicsThesisDal : ISubjectTopicsThesisDal
 
     public IList<SubjectTopicsThesis> GetAll()
     {
-        throw new NotImplementedException();
+        List<SubjectTopicsThesis> subjectTopicsTheses = new List<SubjectTopicsThesis>();
+
+        using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
+        {
+            connection.Open();
+
+            string commandText = $"SELECT * FROM {_tableName}";
+
+            using (NpgsqlCommand command = new NpgsqlCommand(commandText, connection))
+            {
+                using (NpgsqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        SubjectTopicsThesis subjectTopicsThesis = new SubjectTopicsThesis
+                        {
+                            Id = (int)reader["Id"],
+                            SubjectTopicId = (int)reader["SubjectTopicId"],
+                            ThesisId = (int)reader["ThesisId"]
+                        };
+
+                        subjectTopicsTheses.Add(subjectTopicsThesis);
+                    }
+                }
+            }
+        }
+
+        return subjectTopicsTheses;
     }
 
     public SubjectTopicsThesis Add(SubjectTopicsThesis entity)
     {
-        throw new NotImplementedException();
+        using (var connection = new NpgsqlConnection(_connectionString))
+        {
+            connection.Open();
+
+            var commandText = $"INSERT INTO {_tableName} (Subject_Topic_Id, Thesis_Id) VALUES (@SubjectTopicId, @ThesisId) RETURNING Id";
+            using (var command = new NpgsqlCommand(commandText, connection))
+            {
+                command.Parameters.AddWithValue("@SubjectTopicId", entity.SubjectTopicId);
+                command.Parameters.AddWithValue("@ThesisId", entity.ThesisId);
+
+                // ExecuteScalar is used to get the newly inserted Id
+                entity.Id = (int)command.ExecuteScalar();
+            }
+        }
+
+        return entity;
     }
 
     public SubjectTopicsThesis Update(SubjectTopicsThesis entity)
     {
-        throw new NotImplementedException();
+        using (var connection = new NpgsqlConnection(_connectionString))
+        {
+            connection.Open();
+
+            var commandText = $"UPDATE {_tableName} SET Subject_Topic_Id = @SubjectTopicId, Thesis_Id = @ThesisId WHERE Id = @Id";
+            using (var command = new NpgsqlCommand(commandText, connection))
+            {
+                command.Parameters.AddWithValue("@SubjectTopicId", entity.SubjectTopicId);
+                command.Parameters.AddWithValue("@ThesisId", entity.ThesisId);
+                command.Parameters.AddWithValue("@Id", entity.Id);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        return entity;
     }
 
     public void Delete(SubjectTopicsThesis entity)
     {
-        throw new NotImplementedException();
+        using (var connection = new NpgsqlConnection(_connectionString))
+        {
+            connection.Open();
+
+            var commandText = $"DELETE FROM {_tableName} WHERE Id = @Id";
+            using (var command = new NpgsqlCommand(commandText, connection))
+            {
+                command.Parameters.AddWithValue("@Id", entity.Id);
+                command.ExecuteNonQuery();
+            }
+        }
     }
 
     public long GetCount()
     {
-        throw new NotImplementedException();
+        using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
+        {
+            connection.Open();
+
+            string commandText = $"SELECT COUNT(*) FROM {_tableName}";
+
+            using (NpgsqlCommand command = new NpgsqlCommand(commandText, connection))
+            {
+                object result = command.ExecuteScalar();
+                return result != null ? Convert.ToInt64(result) : 0;
+            }
+        }
     }
 }

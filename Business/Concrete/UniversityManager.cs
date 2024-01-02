@@ -17,12 +17,12 @@ public class UniversityManager : IUniversityService
 
     public IDataResult<IEnumerable<UniversityDetailDto>> GetAll()
     {
-        return new SuccessDataResult<IEnumerable<UniversityDetailDto>>(_universityDal.GetListDetailDto());
+        return new SuccessDataResult<IEnumerable<UniversityDetailDto>>(_universityDal.GetAllDetailDto());
     }
 
     public IDataResult<UniversityDetailDto> GetById(int id)
     {
-        var university = _universityDal.GetDetailDto(u => u.Id == id);
+        var university = _universityDal.GetDetailDto();
         if (university is null)
         {
             return new ErrorDataResult<UniversityDetailDto>("University not found");

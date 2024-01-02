@@ -7,7 +7,7 @@ namespace DataAccess.Abstract;
 
 public interface IUniversityDal : IEntityRepository<University>
 {
-    IEnumerable<UniversityDetailDto> GetListDetailDto(Expression<Func<UniversityDetailDto, bool>> expression = null);
-    UniversityDetailDto GetDetailDto(Expression<Func<UniversityDetailDto, bool>> expression);
+    IEnumerable<UniversityDetailDto> GetAllDetailDto();
+    UniversityDetailDto GetDetailDto();
     IEnumerable<InstituteDetailDto> GetInstitutesByUniversityId(int id);
 }

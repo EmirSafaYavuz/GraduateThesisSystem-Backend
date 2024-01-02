@@ -38,6 +38,27 @@ namespace WebAPI.Controllers
             return BadRequest("Hata oluştu");
         }
         
+        ///<summary>
+        ///Get Institute
+        ///</summary>
+        ///<remarks>Institute</remarks>
+        ///<return>institute</return>
+        ///<response code="200"></response>
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Institute))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [HttpGet("{id:int}")]
+        public IActionResult GetById([FromRoute] int id)
+        {
+            var result = _instituteService.GetById(id);
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+
+            return BadRequest("Hata oluştu");
+        }
+        
         /// <summary>
         /// Add Institute.
         /// </summary>

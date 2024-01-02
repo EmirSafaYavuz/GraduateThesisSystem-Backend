@@ -6,5 +6,5 @@ namespace DataAccess.Abstract;
 
 public interface IThesisDal : IEntityRepository<Thesis>
 {
-    IEnumerable<ThesisDetailDto> GetListDetailDto();
+    IEnumerable<ThesisDetailDto> GetAllDetailDto();
 }

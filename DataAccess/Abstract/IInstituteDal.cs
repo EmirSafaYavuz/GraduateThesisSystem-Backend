@@ -6,5 +6,6 @@ namespace DataAccess.Abstract;
 
 public interface IInstituteDal : IEntityRepository<Institute>
 {
-    IEnumerable<InstituteDetailDto> GetListDetailDto();
+    IEnumerable<InstituteDetailDto> GetAllDetailDto();
+    InstituteDetailDto GetDetailDtoById(int id);
 }

@@ -17,7 +17,18 @@ public class InstituteManager : IInstituteService
 
     public IDataResult<IEnumerable<InstituteDetailDto>> GetAll()
     {
-        return new SuccessDataResult<IEnumerable<InstituteDetailDto>>(_instituteDal.GetListDetailDto());
+        return new SuccessDataResult<IEnumerable<InstituteDetailDto>>(_instituteDal.GetAllDetailDto());
+    }
+
+    public IDataResult<InstituteDetailDto> GetById(int id)
+    {
+        var institute = _instituteDal.GetDetailDtoById(id);
+        if (institute is null)
+        {
+            return new ErrorDataResult<InstituteDetailDto>("Institute not found");
+        }
+
+        return new SuccessDataResult<InstituteDetailDto>(institute);
     }
 
     public IDataResult<Institute> Add(Institute institute)

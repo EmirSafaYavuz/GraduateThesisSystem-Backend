@@ -18,7 +18,7 @@ public class ThesisManager : IThesisService
 
     public IDataResult<IEnumerable<ThesisDetailDto>> GetAll()
     {
-        return new SuccessDataResult<IEnumerable<ThesisDetailDto>>(_thesisDal.GetListDetailDto());
+        return new SuccessDataResult<IEnumerable<ThesisDetailDto>>(_thesisDal.GetAllDetailDto());
     }
 
     public IDataResult<Thesis> Add(Thesis thesis)

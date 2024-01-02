@@ -31,7 +31,7 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ThesisDetailDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("ThesisTitle")]
+        [HttpGet("Thesis/Title")]
         public IActionResult SearchThesisTitle(string query, ThesisType? thesisType)
         {
             var result = _searchService.SearchThesisTitle(query, thesisType);
@@ -50,7 +50,7 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ThesisDetailDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("ThesisAbstract")]
+        [HttpGet("Thesis/Abstract")]
         public IActionResult SearchThesisAbstract(string query, ThesisType? thesisType)
         {
             var result = _searchService.SearchThesisAbstract(query, thesisType);
@@ -69,7 +69,7 @@ namespace WebAPI.Controllers
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ThesisDetailDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [HttpGet("ThesisNo")]
+        [HttpGet("Thesis/No")]
         public IActionResult SearchThesisNo(string query, ThesisType? thesisType)
         {
             var result = _searchService.SearchThesisNo(query, thesisType);

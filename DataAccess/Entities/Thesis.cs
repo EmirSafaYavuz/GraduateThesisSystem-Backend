@@ -6,7 +6,7 @@ using DataAccess.Entities.Enums;
 
 namespace DataAccess.Entities;
 
-public partial class Thesis : IEntity
+public class Thesis : IEntity
 {
     public int Id { get; set; }
 
@@ -31,6 +31,5 @@ public partial class Thesis : IEntity
     public int InstituteId { get; set; }
 
     public int SupervisorId { get; set; }
-    [Column("thesis_type")]
-    public virtual ThesisType ThesisType { get; set; }
+    public ThesisType ThesisType { get; set; }
 }
