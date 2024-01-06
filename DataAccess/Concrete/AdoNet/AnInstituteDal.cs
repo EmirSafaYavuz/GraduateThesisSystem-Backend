@@ -190,6 +190,48 @@ public class AnInstituteDal : IInstituteDal
         return institutes;
     }
 
+    public IEnumerable<InstituteDetailDto> GetAllDetailDtoByUniversityId(int universityId)
+    {
+        List<InstituteDetailDto> institutes = new List<InstituteDetailDto>();
+
+        using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
+        {
+            connection.Open();
+
+            string commandText = $@"
+            SELECT i.id AS institute_id,
+                   i.name AS institute_name,
+                   i.university_id AS university_id,
+                   u.name AS university_name
+            FROM institutes i
+            JOIN universities u ON i.university_id = u.id
+            WHERE i.university_id = @UniversityId";
+
+            using (NpgsqlCommand command = new NpgsqlCommand(commandText, connection))
+            {
+                command.Parameters.AddWithValue("@UniversityId", universityId);
+
+                using (NpgsqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        InstituteDetailDto institute = new InstituteDetailDto
+                        {
+                            Id = (int)reader["institute_id"],
+                            Name = (string)reader["institute_name"],
+                            UniversityId = (int)reader["university_id"],
+                            UniversityName = (string)reader["university_name"]
+                        };
+
+                        institutes.Add(institute);
+                    }
+                }
+            }
+        }
+
+        return institutes;
+    }
+
 
     public InstituteDetailDto GetDetailDtoById(int id)
     {

@@ -150,4 +150,37 @@ public class AnKeywordsThesisDal : IKeywordsThesisDal
             }
         }
     }
+
+    public IEnumerable<Keyword> GetKeywordsByThesisId(int id)
+    {
+List<Keyword> keywords = new List<Keyword>();
+
+        using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
+        {
+            connection.Open();
+
+            string commandText = $"SELECT k.Id, k.Name FROM keywords k INNER JOIN {_tableName} kt ON k.Id = kt.Keyword_Id WHERE kt.Thesis_Id = @Id";
+
+            using (NpgsqlCommand command = new NpgsqlCommand(commandText, connection))
+            {
+                command.Parameters.AddWithValue("@Id", id);
+
+                using (NpgsqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Keyword keyword = new Keyword
+                        {
+                            Id = (int)reader["Id"],
+                            Name = (string)reader["Name"]
+                        };
+
+                        keywords.Add(keyword);
+                    }
+                }
+            }
+        }
+
+        return keywords;
+    }
 }

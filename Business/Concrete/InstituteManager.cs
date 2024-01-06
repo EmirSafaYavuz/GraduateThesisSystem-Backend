@@ -20,6 +20,11 @@ public class InstituteManager : IInstituteService
         return new SuccessDataResult<IEnumerable<InstituteDetailDto>>(_instituteDal.GetAllDetailDto());
     }
 
+    public IDataResult<IEnumerable<InstituteDetailDto>> GetByUniversityId(int universityId)
+    {
+        return new SuccessDataResult<IEnumerable<InstituteDetailDto>>(_instituteDal.GetAllDetailDtoByUniversityId(universityId));
+    }
+
     public IDataResult<InstituteDetailDto> GetById(int id)
     {
         var institute = _instituteDal.GetDetailDtoById(id);

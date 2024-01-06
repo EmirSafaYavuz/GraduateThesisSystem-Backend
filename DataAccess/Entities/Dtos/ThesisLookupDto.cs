@@ -13,5 +13,5 @@ public class ThesisLookupDto
     public int AuthorId { get; set; }
     public string AuthorName { get; set; } = null!;
     
-    public ThesisType ThesisType { get; set; }
+    public string ThesisType { get; set; }
 }

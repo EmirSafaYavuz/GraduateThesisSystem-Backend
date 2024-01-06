@@ -151,4 +151,38 @@ public class AnSupervisorsThesisDal : ISupervisorsThesisDal
             }
         }
     }
+
+    public IEnumerable<Supervisor> GetSupervisorsByThesisId(int id)
+    {
+        List<Supervisor> supervisors = new List<Supervisor>();
+
+        using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
+        {
+            connection.Open();
+
+            string commandText = $"SELECT * FROM supervisors WHERE Id IN (SELECT Supervisor_Id FROM {_tableName} WHERE Thesis_Id = @Id)";
+
+            using (NpgsqlCommand command = new NpgsqlCommand(commandText, connection))
+            {
+                command.Parameters.AddWithValue("@Id", id);
+
+                using (NpgsqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Supervisor supervisor = new Supervisor
+                        {
+                            Id = (int)reader["Id"],
+                            PhoneNumber = (string)reader["Phone_Number"],
+                            Name = (string)reader["Name"],
+                        };
+
+                        supervisors.Add(supervisor);
+                    }
+                }
+            }
+        }
+
+        return supervisors;
+    }
 }

@@ -31,17 +31,6 @@ public class UniversityManager : IUniversityService
         return new SuccessDataResult<UniversityDetailDto>(university);
     }
 
-    public IDataResult<IEnumerable<InstituteDetailDto>> GetInstitutesByUniversityId(int id)
-    {
-        var institutes = _universityDal.GetInstitutesByUniversityId(id);
-        if (institutes is null)
-        {
-            return new ErrorDataResult<IEnumerable<InstituteDetailDto>>("Institutes not found");
-        }
-        
-        return new SuccessDataResult<IEnumerable<InstituteDetailDto>>(institutes);
-    }
-
     public IDataResult<University> Add(University university)
     {
         var addedUniversity = _universityDal.Add(university);

@@ -150,4 +150,37 @@ public class AnSubjectTopicsThesisDal : ISubjectTopicsThesisDal
             }
         }
     }
+
+    public IEnumerable<SubjectTopic> GetSubjectTopicsByThesisId(int id)
+    {
+        List<SubjectTopic> subjectTopics = new List<SubjectTopic>();
+
+        using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
+        {
+            connection.Open();
+
+            string commandText = $"SELECT * FROM subject_topics WHERE Id IN (SELECT Subject_Topic_Id FROM {_tableName} WHERE Thesis_Id = @Id)";
+
+            using (NpgsqlCommand command = new NpgsqlCommand(commandText, connection))
+            {
+                command.Parameters.AddWithValue("@Id", id);
+
+                using (NpgsqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        SubjectTopic subjectTopic = new SubjectTopic
+                        {
+                            Id = (int)reader["Id"],
+                            Name = (string)reader["Name"]
+                        };
+
+                        subjectTopics.Add(subjectTopic);
+                    }
+                }
+            }
+        }
+
+        return subjectTopics;
+    }
 }

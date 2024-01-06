@@ -12,10 +12,12 @@ namespace WebAPI.Controllers
     public class UniversitiesController : ControllerBase
     {
         private readonly IUniversityService _universityService;
+        private readonly IInstituteService _instituteService;
 
-        public UniversitiesController(IUniversityService universityService)
+        public UniversitiesController(IUniversityService universityService, IInstituteService instituteService)
         {
             _universityService = universityService;
+            _instituteService = instituteService;
         }
         
         ///<summary>
@@ -67,12 +69,12 @@ namespace WebAPI.Controllers
         ///<return>Institutes</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Institute>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<InstituteDetailDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("{id:int}/institutes")]
         public IActionResult GetInstitutesByUniversityId([FromRoute] int id)
         {
-            var result = _universityService.GetInstitutesByUniversityId(id);
+            var result = _instituteService.GetByUniversityId(id);
             if (result.Success)
             {
                 return Ok(result.Data);

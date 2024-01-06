@@ -24,7 +24,7 @@ namespace WebAPI.Controllers
         ///<return>List theses</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ThesisDetailDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ThesisLookupDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet]
         public IActionResult GetAll()
@@ -39,6 +39,27 @@ namespace WebAPI.Controllers
         }
         
         /// <summary>
+        /// Get Thesis.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Produces("application/json", "text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ThesisDetailDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var result = _thesisService.GetById(id);
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+
+            return BadRequest("Hata oluştu");
+        }
+        
+        
+        /// <summary>
         /// Add Thesis.
         /// </summary>
         /// <param name="thesis"></param>
@@ -47,7 +68,7 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Thesis))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost]
-        public IActionResult Add([FromBody] Thesis thesis)
+        public IActionResult Add([FromBody] ThesisAddDto thesis)
         {
             var result = _thesisService.Add(thesis);
             if (result.Success)

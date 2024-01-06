@@ -11,5 +11,6 @@ public class UniversityDetailDto : IDto
     public string City { get; set; } = null!;
 
     public string Country { get; set; } = null!;
+    public IEnumerable<Institute> Institutes { get; set; } = null!;
 
 }

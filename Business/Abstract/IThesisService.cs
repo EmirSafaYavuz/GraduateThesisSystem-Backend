@@ -6,8 +6,9 @@ namespace Business.Abstract;
 
 public interface IThesisService
 {
-    IDataResult<IEnumerable<ThesisDetailDto>> GetAll();
-    IDataResult<Thesis> Add(Thesis thesis);
+    IDataResult<IEnumerable<ThesisLookupDto>> GetAll();
+    IDataResult<ThesisDetailDto> GetById(int id);
+    IDataResult<Thesis> Add(ThesisAddDto thesis);
     IResult Delete(int id);
     IDataResult<long> GetCount();
 }

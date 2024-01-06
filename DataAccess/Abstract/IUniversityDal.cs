@@ -9,5 +9,4 @@ public interface IUniversityDal : IEntityRepository<University>
 {
     IEnumerable<UniversityDetailDto> GetAllDetailDto();
     UniversityDetailDto GetDetailDto();
-    IEnumerable<InstituteDetailDto> GetInstitutesByUniversityId(int id);
 }

@@ -17,7 +17,7 @@ public class AnUniversityDal : IUniversityDal
     }
 
     private readonly string _tableName = "universities";
-    
+
     public University GetById(int id)
     {
         University university = null;
@@ -161,8 +161,10 @@ public class AnUniversityDal : IUniversityDal
         {
             connection.Open();
 
-            string commandText = $"SELECT u.Id, u.Name, u.Location_Id, l.City, l.Country FROM {_tableName} u " +
-                                 "INNER JOIN Locations l ON u.Location_Id = l.Id";
+            string commandText = $"SELECT u.Id, u.Name, u.Location_Id, l.City, l.Country, i.Name AS InstituteName " +
+                                 "FROM universities u " +
+                                 "INNER JOIN locations l ON u.location_id = l.id " +
+                                 "LEFT JOIN institutes i ON u.id = i.university_id";
 
             using (NpgsqlCommand command = new NpgsqlCommand(commandText, connection))
             {
@@ -170,16 +172,36 @@ public class AnUniversityDal : IUniversityDal
                 {
                     while (reader.Read())
                     {
-                        UniversityDetailDto universityDetail = new UniversityDetailDto
-                        {
-                            Id = (int)reader["Id"],
-                            Name = (string)reader["Name"],
-                            LocationId = (int)reader["Location_Id"],
-                            City = (string)reader["City"],
-                            Country = (string)reader["Country"]
-                        };
+                        int universityId = (int)reader["Id"];
 
-                        result.Add(universityDetail);
+                        // Check if the result already contains the university
+                        UniversityDetailDto universityDetail = result.FirstOrDefault(u => u.Id == universityId);
+
+                        if (universityDetail == null)
+                        {
+                            // University not found, create a new one
+                            universityDetail = new UniversityDetailDto
+                            {
+                                Id = universityId,
+                                Name = (string)reader["Name"],
+                                LocationId = (int)reader["Location_Id"],
+                                City = (string)reader["City"],
+                                Country = (string)reader["Country"],
+                                Institutes = new List<Institute>()
+                            };
+
+                            result.Add(universityDetail);
+                        }
+
+                        // Check if the InstituteName is not null (there might be cases where there is no related institute)
+                        if (reader["InstituteName"] != DBNull.Value)
+                        {
+                            // Add the Institute to the university's Institutes collection
+                            ((List<Institute>)universityDetail.Institutes).Add(new Institute
+                            {
+                                Name = (string)reader["InstituteName"]
+                            });
+                        }
                     }
                 }
             }
@@ -188,13 +210,8 @@ public class AnUniversityDal : IUniversityDal
         return result;
     }
 
-    public UniversityDetailDto GetDetailDto()
-    {
-        throw new NotImplementedException();
-    }
-    
 
-    public IEnumerable<InstituteDetailDto> GetInstitutesByUniversityId(int id)
+    public UniversityDetailDto GetDetailDto()
     {
         throw new NotImplementedException();
     }

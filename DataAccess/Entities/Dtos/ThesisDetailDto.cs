@@ -34,4 +34,7 @@ public class ThesisDetailDto : IDto
     public int SupervisorId { get; set; }
     public string SupervisorName { get; set; } = null!;
     public string ThesisType { get; set; }
+    public IEnumerable<SubjectTopic> SubjectTopics { get; set; } = null!;
+    public IEnumerable<Keyword> Keywords { get; set; } = null!;
+    public IEnumerable<Supervisor> Supervisors { get; set; } = null!;
 }
