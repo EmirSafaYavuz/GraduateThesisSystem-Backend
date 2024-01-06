@@ -10,5 +10,5 @@ public interface IKeywordService
     IDataResult<Keyword> Add(Keyword keyword);
     IResult Delete(int id);
     IDataResult<long> GetCount();
-    IDataResult<IEnumerable<ThesisDetailDto>> GetThesesByKeywordId(int id);
+    IDataResult<IEnumerable<ThesisLookupDto>> GetThesesByKeywordId(int id);
 }

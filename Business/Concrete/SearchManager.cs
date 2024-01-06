@@ -17,19 +17,19 @@ public class SearchManager : ISearchService
         _searchDal = searchDal;
     }
 
-    public IDataResult<IEnumerable<ThesisDetailDto>> SearchThesisTitle(string query, ThesisType? thesisType)
+    public IDataResult<IEnumerable<ThesisLookupDto>> SearchThesisTitle(string query, ThesisType? thesisType)
     {
-        return new SuccessDataResult<IEnumerable<ThesisDetailDto>>(_searchDal.SearchThesisTitle(query, thesisType));
+        return new SuccessDataResult<IEnumerable<ThesisLookupDto>>(_searchDal.SearchThesisTitle(query, thesisType));
     }
 
-    public IDataResult<IEnumerable<ThesisDetailDto>> SearchThesisAbstract(string query, ThesisType? thesisType)
+    public IDataResult<IEnumerable<ThesisLookupDto>> SearchThesisAbstract(string query, ThesisType? thesisType)
     {
-        return new SuccessDataResult<IEnumerable<ThesisDetailDto>>(_searchDal.SearchThesisAbstract(query, thesisType));
+        return new SuccessDataResult<IEnumerable<ThesisLookupDto>>(_searchDal.SearchThesisAbstract(query, thesisType));
     }
 
-    public IDataResult<IEnumerable<ThesisDetailDto>> SearchThesisNo(string query, ThesisType? thesisType)
+    public IDataResult<IEnumerable<ThesisLookupDto>> SearchThesisNo(string query, ThesisType? thesisType)
     {
-        return new SuccessDataResult<IEnumerable<ThesisDetailDto>>(_searchDal.SearchThesisNo(query, thesisType));
+        return new SuccessDataResult<IEnumerable<ThesisLookupDto>>(_searchDal.SearchThesisNo(query, thesisType));
     }
 
     public IDataResult<IEnumerable<Author>> SearchAuthor(string query)
@@ -42,10 +42,10 @@ public class SearchManager : ISearchService
         return new SuccessDataResult<IEnumerable<Institute>>(_searchDal.SearchInstitute(query));
     }
 
-    public async Task<IDataResult<IEnumerable<SupervisorDetailDto>>> SearchSupervisor(string query)
+    public IDataResult<IEnumerable<Supervisor>> SearchSupervisor(string query)
     {
-        var result = await _searchDal.SearchSupervisor(query);
-        return new SuccessDataResult<IEnumerable<SupervisorDetailDto>>(result);
+        var result = _searchDal.SearchSupervisor(query);
+        return new SuccessDataResult<IEnumerable<Supervisor>>(result);
     }
 
     public IDataResult<IEnumerable<SubjectTopic>> SearchSubjectTopic(string query)

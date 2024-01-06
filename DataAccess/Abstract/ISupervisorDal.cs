@@ -6,5 +6,5 @@ namespace DataAccess.Abstract;
 
 public interface ISupervisorDal : IEntityRepository<Supervisor>
 {
-    IEnumerable<ThesisDetailDto> GetThesesBySupervisorId(int id);
+    IEnumerable<ThesisLookupDto> GetThesesBySupervisorId(int id);
 }

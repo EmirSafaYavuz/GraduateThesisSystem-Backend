@@ -43,9 +43,9 @@ public class KeywordManager : IKeywordService
         return new SuccessDataResult<long>(_keywordDal.GetCount());
     }
 
-    public IDataResult<IEnumerable<ThesisDetailDto>> GetThesesByKeywordId(int id)
+    public IDataResult<IEnumerable<ThesisLookupDto>> GetThesesByKeywordId(int id)
     {
         var result = _keywordDal.GetThesesByKeywordId(id);
-        return new SuccessDataResult<IEnumerable<ThesisDetailDto>>(result);
+        return new SuccessDataResult<IEnumerable<ThesisLookupDto>>(result);
     }
 }

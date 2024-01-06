@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using DataAccess.Abstract;
 using DataAccess.Entities;
 using DataAccess.Entities.Dtos;
@@ -69,8 +68,8 @@ namespace DataAccess.Concrete.AdoNet
                             Author author = new Author
                             {
                                 Id = (int)reader["Id"],
-                                Name = reader["Name"].ToString(),
-                                Email = reader["Email"].ToString()
+                                Name = (string)reader["Name"],
+                                Email = (string)reader["Email"]
                             };
 
                             authors.Add(author);
@@ -94,7 +93,6 @@ namespace DataAccess.Concrete.AdoNet
                     command.Parameters.AddWithValue("@Name", entity.Name);
                     command.Parameters.AddWithValue("@Email", entity.Email);
 
-                    // ExecuteScalar is used to get the newly inserted Id
                     entity.Id = (int)command.ExecuteScalar();
                 }
             }
@@ -153,10 +151,43 @@ namespace DataAccess.Concrete.AdoNet
             }
         }
 
-        public IEnumerable<ThesisDetailDto> GetThesesByAuthorId(int id)
+        public IEnumerable<ThesisLookupDto> GetThesesByAuthorId(int id)
         {
-            //TODO Implement
-            throw new NotImplementedException();
+            List<ThesisLookupDto> theses = new List<ThesisLookupDto>();
+
+            using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                string commandText = $"SELECT t.Id, t.ThesisNo, t.Title, t.AuthorId, a.Name AS AuthorName, t.ThesisType FROM theses t INNER JOIN authors a ON t.AuthorId = a.Id WHERE t.AuthorId = @Id";
+
+                using (NpgsqlCommand command = new NpgsqlCommand(commandText, connection))
+                {
+                    command.Parameters.AddWithValue("@Id", id);
+
+                    using (NpgsqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ThesisLookupDto thesis = new ThesisLookupDto
+                            {
+                                Id = (int)reader["Id"],
+                                ThesisNo = (int)reader["ThesisNo"],
+                                Title = (string)reader["Title"],
+                                AuthorId = (int)reader["AuthorId"],
+                                AuthorName = (string)reader["AuthorName"],
+                                ThesisType = reader["thesis_type"] != DBNull.Value
+                                    ? (string)reader["thesis_type"]
+                                    : string.Empty
+                            };
+
+                            theses.Add(thesis);
+                        }
+                    }
+                }
+                
+                return theses;
+            }
         }
     }
 }

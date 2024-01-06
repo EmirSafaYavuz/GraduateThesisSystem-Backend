@@ -134,7 +134,7 @@ namespace WebAPI.Controllers
         ///<return>theses</return>
         ///<response code="200"></response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ThesisDetailDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ThesisLookupDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("{id:int}/theses")]
         public IActionResult GetThesesByAuthorId([FromRoute] int id)

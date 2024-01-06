@@ -4,7 +4,7 @@ using Core.Entities;
 
 namespace DataAccess.Entities;
 
-public partial class Keyword : IEntity
+public class Keyword : IEntity
 {
     public int Id { get; set; }
 

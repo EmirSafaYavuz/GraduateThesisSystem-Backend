@@ -24,8 +24,8 @@ public class ThesisAddDto : IDto
     public int InstituteId { get; set; }
 
     public int SupervisorId { get; set; }
-    public IEnumerable<int> SupervisorIdList { get; set; } = null!;
-    public IEnumerable<int> SubjectTopicIdList { get; set; } = null!;
-    public IEnumerable<string> Keywords { get; set; } = null!;
+    public IEnumerable<int>? SupervisorIdList { get; set; } = null!;
+    public IEnumerable<int>? SubjectTopicIdList { get; set; } = null!;
+    public IEnumerable<string>? Keywords { get; set; } = null!;
     public ThesisType ThesisType { get; set; }
 }

@@ -6,5 +6,5 @@ namespace DataAccess.Abstract;
 
 public interface IAuthorDal : IEntityRepository<Author>
 { 
-    IEnumerable<ThesisDetailDto> GetThesesByAuthorId(int id);
+    IEnumerable<ThesisLookupDto> GetThesesByAuthorId(int id);
 }

@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
         ///<response code="200">Returns the list of theses.</response>
         ///<response code="400">If the request is invalid or there is an error in the search process.</response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ThesisDetailDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ThesisLookupDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("Thesis/Title")]
         public IActionResult SearchThesisTitle(string query, ThesisType? thesisType)
@@ -48,7 +48,7 @@ namespace WebAPI.Controllers
         ///<response code="200">Returns the list of theses.</response>
         ///<response code="400">If the request is invalid or there is an error in the search process.</response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ThesisDetailDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ThesisLookupDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("Thesis/Abstract")]
         public IActionResult SearchThesisAbstract(string query, ThesisType? thesisType)
@@ -67,7 +67,7 @@ namespace WebAPI.Controllers
         ///<response code="200">Returns the list of theses.</response>
         ///<response code="400">If the request is invalid or there is an error in the search process.</response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ThesisDetailDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ThesisLookupDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("Thesis/No")]
         public IActionResult SearchThesisNo(string query, ThesisType? thesisType)
@@ -121,12 +121,12 @@ namespace WebAPI.Controllers
         ///<response code="200">Returns the list of supervisors.</response>
         ///<response code="400">If the request is invalid or there is an error in the search process.</response>
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SupervisorDetailDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Supervisor>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpGet("Supervisor")]
-        public async Task<IActionResult> SearchSupervisor(string query)
+        public IActionResult SearchSupervisor(string query)
         {
-            var result = await _searchService.SearchSupervisor(query);
+            var result = _searchService.SearchSupervisor(query);
             return HandleResult(result);
         }
 

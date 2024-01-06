@@ -152,8 +152,60 @@ public class AnSupervisorDal : ISupervisorDal
         }
     }
 
-    public IEnumerable<ThesisDetailDto> GetThesesBySupervisorId(int id)
+    public IEnumerable<ThesisLookupDto> GetThesesBySupervisorId(int id)
     {
-        throw new NotImplementedException();
+        
+        /*
+         * public int Id { get; set; }
+
+           public int ThesisNo { get; set; }
+
+           public string Title { get; set; } = null!;
+
+           public int AuthorId { get; set; }
+           public string AuthorName { get; set; } = null!;
+
+           public string ThesisType { get; set; }
+         */
+        
+        List<ThesisLookupDto> theses = new List<ThesisLookupDto>();
+        
+        using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
+        {
+            connection.Open();
+
+            string commandText = @"SELECT t.Id, t.ThesisNo, t.Title, a.Id, a.Name, tt.Name
+                                   FROM theses t
+                                   INNER JOIN authors a ON t.Author_Id = a.Id
+                                   INNER JOIN thesis_types tt ON t.Thesis_Type_Id = tt.Id
+                                   INNER JOIN thesis_supervisors ts ON t.Id = ts.Thesis_Id
+                                   INNER JOIN supervisors s ON ts.Supervisor_Id = s.Id
+                                   WHERE s.Id = @Id";
+
+            using (NpgsqlCommand command = new NpgsqlCommand(commandText, connection))
+            {
+                command.Parameters.AddWithValue("@Id", id);
+
+                using (NpgsqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        ThesisLookupDto thesis = new ThesisLookupDto
+                        {
+                            Id = (int)reader["Id"],
+                            ThesisNo = (int)reader["ThesisNo"],
+                            Title = (string)reader["Title"],
+                            AuthorId = (int)reader["Id"],
+                            AuthorName = (string)reader["Name"],
+                            ThesisType = (string)reader["ThesisType"],
+                        };
+
+                        theses.Add(thesis);
+                    }
+                }
+            }
+        }
+        
+        return theses;
     }
 }

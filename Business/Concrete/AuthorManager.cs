@@ -34,10 +34,10 @@ public class AuthorManager : IAuthorService
         return new SuccessDataResult<Author>(author);
     }
 
-    public IDataResult<IEnumerable<ThesisDetailDto>> GetThesesByAuthorId(int id)
+    public IDataResult<IEnumerable<ThesisLookupDto>> GetThesesByAuthorId(int id)
     {
         var result = _authorDal.GetThesesByAuthorId(id);
-        return new SuccessDataResult<IEnumerable<ThesisDetailDto>>(result);
+        return new SuccessDataResult<IEnumerable<ThesisLookupDto>>(result);
     }
 
     [ValidationAspect(typeof(AuthorValidator), Priority = 1)]

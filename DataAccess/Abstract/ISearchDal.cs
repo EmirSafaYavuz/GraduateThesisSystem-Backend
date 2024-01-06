@@ -7,12 +7,12 @@ namespace DataAccess.Abstract;
 
 public interface ISearchDal
 {
-    IEnumerable<ThesisDetailDto> SearchThesisTitle(string query, ThesisType? thesisType);
-    IEnumerable<ThesisDetailDto> SearchThesisAbstract(string query, ThesisType? thesisType);
-    IEnumerable<ThesisDetailDto> SearchThesisNo(string query, ThesisType? thesisType);
+    IEnumerable<ThesisLookupDto> SearchThesisTitle(string query, ThesisType? thesisType);
+    IEnumerable<ThesisLookupDto> SearchThesisAbstract(string query, ThesisType? thesisType);
+    IEnumerable<ThesisLookupDto> SearchThesisNo(string query, ThesisType? thesisType);
     IEnumerable<Author> SearchAuthor(string query);
     IEnumerable<Institute> SearchInstitute(string query);
-    Task<IEnumerable<SupervisorDetailDto>> SearchSupervisor(string query);
+    IEnumerable<Supervisor> SearchSupervisor(string query);
     IEnumerable<SubjectTopic> SearchSubjectTopic(string query);
     IEnumerable<Keyword> SearchKeyword(string query);
 }

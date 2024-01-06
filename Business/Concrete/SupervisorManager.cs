@@ -55,9 +55,9 @@ public class SupervisorManager : ISupervisorService
         return new SuccessDataResult<long>(count);
     }
 
-    public IDataResult<IEnumerable<ThesisDetailDto>> GetThesesBySupervisorId(int id)
+    public IDataResult<IEnumerable<ThesisLookupDto>> GetThesesBySupervisorId(int id)
     {
         var result = _supervisorDal.GetThesesBySupervisorId(id);
-        return new SuccessDataResult<IEnumerable<ThesisDetailDto>>(result);
+        return new SuccessDataResult<IEnumerable<ThesisLookupDto>>(result);
     }
 }

@@ -11,5 +11,5 @@ public interface ISupervisorService
     IDataResult<Supervisor> Add(Supervisor supervisor);
     IResult Delete(int id);
     IDataResult<long> GetCount();
-    IDataResult<IEnumerable<ThesisDetailDto>> GetThesesBySupervisorId(int id);
+    IDataResult<IEnumerable<ThesisLookupDto>> GetThesesBySupervisorId(int id);
 }

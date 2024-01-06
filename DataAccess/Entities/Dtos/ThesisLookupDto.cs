@@ -1,5 +1,3 @@
-using DataAccess.Entities.Enums;
-
 namespace DataAccess.Entities.Dtos;
 
 public class ThesisLookupDto

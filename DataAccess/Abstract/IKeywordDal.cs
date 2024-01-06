@@ -6,5 +6,5 @@ namespace DataAccess.Abstract;
 
 public interface IKeywordDal : IEntityRepository<Keyword>
 {
-    IEnumerable<ThesisDetailDto> GetThesesByKeywordId(int id);
+    IEnumerable<ThesisLookupDto> GetThesesByKeywordId(int id);
 }

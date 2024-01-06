@@ -147,8 +147,46 @@ public class AnKeywordDal : IKeywordDal
         }
     }
 
-    public IEnumerable<ThesisDetailDto> GetThesesByKeywordId(int id)
+    public IEnumerable<ThesisLookupDto> GetThesesByKeywordId(int id)
     {
-        throw new NotImplementedException();
+        List<ThesisLookupDto> theses = new List<ThesisLookupDto>();
+        
+        using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
+        {
+            connection.Open();
+
+            string commandText = @"SELECT t.Id, t.ThesisNo, t.Title, a.Id, a.Name, tt.Name
+                                   FROM theses t
+                                   INNER JOIN authors a ON t.AuthorId = a.Id
+                                   INNER JOIN thesis_types tt ON t.ThesisTypeId = tt.Id
+                                   INNER JOIN thesis_keywords tk ON t.Id = tk.ThesisId
+                                   INNER JOIN keywords k ON tk.KeywordId = k.Id
+                                   WHERE k.Id = @Id";
+
+            using (NpgsqlCommand command = new NpgsqlCommand(commandText, connection))
+            {
+                command.Parameters.AddWithValue("@Id", id);
+
+                using (NpgsqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        ThesisLookupDto thesis = new ThesisLookupDto
+                        {
+                            Id = (int)reader[0],
+                            ThesisNo = (int)reader[1],
+                            Title = (string)reader[2],
+                            AuthorId = (int)reader[3],
+                            AuthorName = (string)reader[4],
+                            ThesisType = (string)reader[5]
+                        };
+
+                        theses.Add(thesis);
+                    }
+                }
+            }
+        }
+        
+        return theses;
     }
 }
